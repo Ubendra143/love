@@ -4,72 +4,328 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Our Love Story</title>
+
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+
+  <!-- ===== CSS START ===== -->
+  <style>
+    :root {
+      --bg-1: #120117;
+      --bg-2: #2c0038;
+      --bg-3: #4a003f;
+      --pink: #ff4da6;
+      --hot-pink: #ff2f92;
+      --soft-pink: #ffd9ec;
+      --card: rgba(255, 255, 255, 0.14);
+      --border: rgba(255, 255, 255, 0.35);
+      --text: #fff7fb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255, 60, 150, 0.45), transparent 45%),
+        radial-gradient(circle at 80% 20%, rgba(255, 0, 140, 0.32), transparent 35%),
+        linear-gradient(145deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      overflow-x: hidden;
+    }
+
+    .bg-hearts::before,
+    .bg-hearts::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .bg-hearts::before {
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.35) 0 3px, transparent 3px),
+        radial-gradient(circle, rgba(255, 130, 188, 0.4) 0 2px, transparent 2px);
+      background-size: 120px 120px, 80px 80px;
+      background-position: 0 0, 40px 20px;
+      animation: sparkle 18s linear infinite;
+    }
+
+    .bg-hearts::after {
+      background:
+        repeating-linear-gradient(
+          45deg,
+          rgba(255, 120, 180, 0.08) 0,
+          rgba(255, 120, 180, 0.08) 2px,
+          transparent 2px,
+          transparent 10px
+        );
+      mix-blend-mode: screen;
+      opacity: 0.5;
+    }
+
+    .site-main {
+      width: min(980px, 92%);
+      margin: 0 auto;
+      padding: 3.5rem 0 4rem;
+    }
+
+    .panel {
+      display: none;
+      text-align: center;
+      padding: clamp(1.2rem, 2vw, 2rem);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      backdrop-filter: blur(10px);
+      background: var(--card);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      animation: popIn 0.65s ease;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    .tag {
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.78rem;
+      color: #ffd5ec;
+      margin: 0;
+    }
+
+    h1, h2, h3 {
+      margin-top: 0.55rem;
+      margin-bottom: 0.8rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+    }
+
+    h2 {
+      font-size: clamp(1.8rem, 3.2vw, 2.7rem);
+    }
+
+    .script {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.1rem, 5vw, 4rem);
+      color: #ffd8ef;
+    }
+
+    .lead {
+      max-width: 760px;
+      margin: 0 auto 1.2rem;
+      color: #ffeef8;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 0.8rem 1.35rem;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .btn-glow, .yes {
+      background: linear-gradient(120deg, var(--pink), var(--hot-pink));
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(255, 46, 140, 0.42);
+    }
+
+    .no {
+      background: #fff;
+      color: #b20062;
+      position: relative;
+    }
+
+    .button-area {
+      position: relative;
+      min-height: 180px;
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+
+    .no.moving {
+      position: absolute;
+      left: 50%;
+      top: 52%;
+      transform: translate(-50%, -50%);
+    }
+
+    .romantic-words {
+      margin: 1.2rem auto 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .word-chip {
+      padding: 0.8rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+      animation: floaty 3s ease-in-out infinite;
+    }
+
+    .gallery {
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+    }
+
+    .memory-card {
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
+      transition: transform 0.3s ease;
+    }
+
+    .memory-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .memory-card img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+    }
+
+    .memory-copy {
+      padding: 0.9rem;
+      text-align: left;
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes sparkle {
+      from { transform: translateY(0); }
+      to { transform: translateY(-120px); }
+    }
+
+    @keyframes floaty {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+  <!-- ===== CSS END ===== -->
 </head>
+
 <body>
-  <div class="bg-hearts" aria-hidden="true"></div>
+  <div class="bg-hearts"></div>
 
   <main class="site-main">
-    <section id="opening" class="panel active" aria-live="polite">
+    <section id="opening" class="panel active">
       <p class="tag">For Someone Special 💖</p>
       <h1>Hey Love, I Made Something Just For You</h1>
       <p class="lead">Every beat of my heart says your name. Ready for a little surprise?</p>
       <button id="startBtn" class="btn btn-glow">Open My Heart</button>
     </section>
 
-    <section id="question" class="panel" aria-live="polite">
+    <section id="question" class="panel">
       <h2>Do you like me? 🥺</h2>
-      <p class="lead">Please choose wisely... one option is very brave, the other is very shy 😌</p>
+      <p class="lead">Please choose wisely... 😌</p>
       <div id="buttonsWrap" class="button-area">
-        <button id="yesBtn" class="btn yes">Yes, of course! 💘</button>
-        <button id="noBtn" class="btn no" aria-label="No option">No 🙈</button>
+        <button id="yesBtn" class="btn yes">Yes 💘</button>
+        <button id="noBtn" class="btn no">No 🙈</button>
       </div>
     </section>
 
-    <section id="love" class="panel" aria-live="polite">
-      <h2 class="script">You said yes... and made my world brighter ✨</h2>
-      <p class="lead">You are my sunrise, my peace, my laughter, and my forever favorite person.</p>
+    <section id="love" class="panel">
+      <h2 class="script">You said yes ✨</h2>
       <div class="romantic-words" id="romanticWords"></div>
-      <button id="journeyBtn" class="btn btn-glow">Show Our Journey Beyond</button>
+      <button id="journeyBtn" class="btn btn-glow">Show Our Journey</button>
     </section>
 
-    <section id="journey" class="panel" aria-live="polite">
-      <h2>Our Journey Beyond ♾️</h2>
-      <p class="lead">Every memory with you is a treasure. Add your own photos and make this story truly ours.</p>
-
-      <div class="gallery">
-        <article class="memory-card">
-          <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=900&q=80" alt="A couple holding hands in golden sunlight" />
-          <div class="memory-copy">
-            <h3>Where It Began</h3>
-            <p>The day our eyes met, my universe changed forever.</p>
-          </div>
-        </article>
-
-        <article class="memory-card">
-          <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=900&q=80" alt="Romantic evening date with lights" />
-          <div class="memory-copy">
-            <h3>Our Sweet Moments</h3>
-            <p>From tiny laughs to deep talks, every second with you feels magical.</p>
-          </div>
-        </article>
-
-        <article class="memory-card">
-          <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=900&q=80" alt="Couple silhouette under heart shaped lights" />
-          <div class="memory-copy">
-            <h3>Beyond Forever</h3>
-            <p>Hand in hand, heart to heart, our love story keeps growing.</p>
-          </div>
-        </article>
-      </div>
-
-      <p class="footer-line">P.S. Replace these sample photos with your own memories to make it even more personal 💕</p>
+    <section id="journey" class="panel">
+      <h2>Our Journey ♾️</h2>
+      <p class="lead">Every memory with you is precious 💕</p>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <!-- ===== JS START ===== -->
+  <script>
+    const panels = {
+      opening: document.getElementById('opening'),
+      question: document.getElementById('question'),
+      love: document.getElementById('love'),
+      journey: document.getElementById('journey')
+    };
+
+    const startBtn = document.getElementById('startBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const buttonsWrap = document.getElementById('buttonsWrap');
+    const journeyBtn = document.getElementById('journeyBtn');
+    const romanticWords = document.getElementById('romanticWords');
+
+    const words = [
+      'You are my favorite hello 💞',
+      'My heart is happiest with you 💓',
+      'You make life magical ✨',
+      'I choose you. Always. ♾️'
+    ];
+
+    function showPanel(name) {
+      Object.values(panels).forEach(p => p.classList.remove('active'));
+      panels[name].classList.add('active');
+    }
+
+    function renderRomanticWords() {
+      romanticWords.innerHTML = '';
+      words.forEach(line => {
+        const chip = document.createElement('div');
+        chip.className = 'word-chip';
+        chip.textContent = line;
+        romanticWords.appendChild(chip);
+      });
+    }
+
+    function moveNoButton() {
+      noBtn.classList.add('moving');
+      const wrap = buttonsWrap.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+      noBtn.style.left = Math.random() * (wrap.width - btn.width) + 'px';
+      noBtn.style.top = Math.random() * (wrap.height - btn.height) + 'px';
+    }
+
+    startBtn.onclick = () => {
+      showPanel('question');
+      setTimeout(moveNoButton, 150);
+    };
+
+    yesBtn.onclick = () => {
+      renderRomanticWords();
+      showPanel('love');
+    };
+
+    journeyBtn.onclick = () => showPanel('journey');
+
+    ['mouseenter','click','touchstart'].forEach(e =>
+      noBtn.addEventListener(e, moveNoButton)
+    );
+  </script>
+  <!-- ===== JS END ===== -->
 </body>
 </html>
